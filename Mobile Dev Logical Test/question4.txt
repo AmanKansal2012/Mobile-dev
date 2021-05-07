@@ -1,0 +1,23 @@
+//In flutter
+
+ Future<String> displayResults() async {
+    try {
+      final response = await https.get(
+       "www.example.com/api/get/1",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      );
+      if (response.statusCode != 200) {
+        throw const HttpException('Something went wrong!');
+      }
+      final responseData = json.decode(response.body);
+      if (responseData['error']) {
+        throw const HttpException('Something went wrong! Try again..');
+      }
+print(response.body);// api response
+    return response.body;
+    } catch (error) {
+      rethrow;
+    }
+  }

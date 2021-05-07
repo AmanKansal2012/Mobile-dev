@@ -1,0 +1,13 @@
+//In dart
+var map = {
+  4:"abc",
+  10:"abc2",
+  5:"abc3",
+  6:"abc5",
+  
+};
+
+void main() {
+  final sorted = map.keys.toList()..sort();
+  print(sorted);
+}
