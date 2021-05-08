@@ -12,10 +12,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _controller = TextEditingController();
-  List todo = [];
-  bool value=false;
+  List<String> todo =List<String>();
   List<bool> listCheck = List.generate(10000, (index) => false);
-  var localToDO;
+  List<String> onPress =List<String>();
 
   String listKey = "listKey";
 
@@ -117,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         reverse: true,
-                        itemCount: todo.length,
+                        itemCount: todo!=null?todo.length:0,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
                             decoration: BoxDecoration(
@@ -263,12 +262,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: kWhite,
                     onPressed: () {
                       _controller.text.trim().isNotEmpty
-                          ? todo.add(_controller.text.trim())
+                          ? onPress.add(_controller.text.trim())
                           : null;
                       _controller.clear();
                       listCheck.add(false);
 
-                      storeStringList(todo);
+                      storeStringList(onPress);
                       Navigator.pop(context);
                     },
                     child: Row(
