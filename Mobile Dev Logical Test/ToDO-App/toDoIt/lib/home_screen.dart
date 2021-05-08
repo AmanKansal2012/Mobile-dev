@@ -12,9 +12,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _controller = TextEditingController();
-  List<String> todo =List<String>();
+  List<String> todo =[];
   List<bool> listCheck = List.generate(10000, (index) => false);
-  List<String> onPress =List<String>();
+  //List<String> onPress =List<String>();
 
   String listKey = "listKey";
 
@@ -35,18 +35,22 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  getList() {
+  getList() async {
     getStringList().then((value) {
       Provider.of<ListProvider>(context, listen: false).getList(value);
     });
+
   }
 
   @override
   Widget build(BuildContext context) {
-
-    todo = Provider.of<ListProvider>(context, listen: true).toDo;
+    todo =  Provider.of<ListProvider>(context, listen: true).toDo;
 
     getList();
+if(todo==null){
+  todo=[];
+}
+
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
@@ -262,13 +266,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: kWhite,
                     onPressed: () {
                       _controller.text.trim().isNotEmpty
-                          ? onPress.add(_controller.text.trim())
+                          ? todo?.add(_controller.text.trim())
                           : null;
                       _controller.clear();
                       listCheck.add(false);
 
-                      storeStringList(onPress);
-                      Navigator.pop(context);
+                      storeStringList(todo);
+                       Navigator.pop(context);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
